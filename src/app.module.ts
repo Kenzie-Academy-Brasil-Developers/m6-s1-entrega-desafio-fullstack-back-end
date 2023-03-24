@@ -10,10 +10,10 @@ import { PrismaService } from './prisma.service';
   controllers: [],
   providers: [
     PrismaService,
-    {
-      provide: APP_PIPE,
-      useClass: ValidationPipe,
-    },
+    // {
+    //   provide: APP_PIPE,
+    //   useClass: ValidationPipe,
+    // },
   ],
 })
 export class AppModule {}
