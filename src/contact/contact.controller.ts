@@ -9,45 +9,42 @@ import {
   UseGuards,
   HttpCode,
   HttpStatus,
+  Request,
 } from '@nestjs/common';
 import { UserExistsGuard } from 'src/user/guards/user-exists.guard';
 import { ContactService } from './contact.service';
 import { CreateContactDto } from './dto/create-contact.dto';
 import { UpdateContactDto } from './dto/update-contact.dto';
 import { ContactExistsGuard } from './guards/contact-exists.guard';
+import { IsOwnerGuard } from './guards/is-owner-guard.guard';
 
 @Controller('users')
 export class ContactController {
   constructor(private readonly contactService: ContactService) {}
 
-  @Post(':userId/contacts')
-  @UseGuards(UserExistsGuard)
-  create(
-    @Param('userId') userId: string,
-    @Body() createContactDto: CreateContactDto,
-  ) {
-    return this.contactService.create(+userId, createContactDto);
+  @Post('contacts')
+  create(@Request() request, @Body() createContactDto: CreateContactDto) {
+    return this.contactService.create(request.user, createContactDto);
   }
 
-  @Get('/contacts')
-  findAll() {
-    return this.contactService.findAll();
-  }
+  // @Get('contacts')
+  // findAll() {
+  //   return this.contactService.findAll();
+  // }
 
-  @Get(':userId/contacts')
-  @UseGuards(UserExistsGuard)
-  findAllUserContacts(@Param('userId') userId: string) {
-    return this.contactService.findAllUserContacts(+userId);
+  @Get('contacts')
+  findAllUserContacts(@Request() request) {
+    return this.contactService.findAllUserContacts(request.user);
   }
 
   @Get('contacts/:contactId')
-  @UseGuards(ContactExistsGuard)
+  @UseGuards(ContactExistsGuard, IsOwnerGuard)
   findOne(@Param('contactId') contactId: string) {
     return this.contactService.findOne(+contactId);
   }
 
   @Patch('contacts/:contactId')
-  @UseGuards(ContactExistsGuard)
+  @UseGuards(ContactExistsGuard, IsOwnerGuard)
   update(
     @Param('contactId') contactId: string,
     @Body() updateContactDto: UpdateContactDto,
@@ -56,7 +53,7 @@ export class ContactController {
   }
 
   @Delete('contacts/:contactId')
-  @UseGuards(ContactExistsGuard)
+  @UseGuards(ContactExistsGuard, IsOwnerGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('contactId') contactId: string) {
     return this.contactService.remove(+contactId);

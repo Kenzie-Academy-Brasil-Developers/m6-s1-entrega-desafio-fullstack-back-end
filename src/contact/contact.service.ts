@@ -12,16 +12,19 @@ import { UpdateContactDto } from './dto/update-contact.dto';
 export class ContactService {
   constructor(private prisma: PrismaService) {}
 
-  async create(userId: number, createContactDto: CreateContactDto) {
+  async create(user, createContactDto: CreateContactDto) {
     const createdContact = await this.prisma.contact.create({
-      data: { ...createContactDto, ownerId: userId },
+      data: { ...createContactDto, ownerId: user.id },
     });
 
     return createdContact;
   }
 
-  async findAllUserContacts(userId: number) {
-    return await this.prisma.contact.findMany({ where: { ownerId: userId } });
+  async findAllUserContacts(user) {
+    const userId = +user.id;
+    return await this.prisma.contact.findMany({
+      where: { ownerId: userId },
+    });
   }
 
   async findAll() {

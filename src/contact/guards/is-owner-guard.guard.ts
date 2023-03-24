@@ -1,23 +1,25 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
-import { Observable } from 'rxjs';
 import { PrismaService } from 'src/prisma.service';
 import { HttpException, HttpStatus } from '@nestjs/common';
 
 @Injectable()
-export class UserExistsGuard implements CanActivate {
+export class IsOwnerGuard implements CanActivate {
   constructor(private prisma: PrismaService) {}
 
   async canActivate(context: ExecutionContext) {
     const request = context.switchToHttp().getRequest();
 
-    const user = await this.prisma.user.findFirst({
-      where: { id: parseInt(request.params.userId) },
+    const contact = await this.prisma.contact.findFirst({
+      where: { id: parseInt(request.params.contactId) },
     });
 
-    if (!user) {
-      throw new HttpException(`This user does not exist`, HttpStatus.NOT_FOUND);
+    if (request.user.id === contact.ownerId) {
+      return true;
     }
 
-    return true;
+    throw new HttpException(
+      `You are not this contact owner`,
+      HttpStatus.FORBIDDEN,
+    );
   }
 }
