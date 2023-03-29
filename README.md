@@ -4,8 +4,8 @@
 <ul>
   <li>- Clonar localmente este repositório.</li>
   <li>- Utilizar o comando "yarn" no seu terminal, para instalar todas as dependências.</li>
-  <li>- Utilizar o comando "yarn prisma migrate dev" no seu terminal, para obter novas migrações e construir um banco de dados sqlite na sua pasta prisma.</li>
   <li>- Definir a sua chave secreta no .env, no campo JWT_SECRET_KEY. Há um .env.example no projeto para te auxiliar nisto.</li>
+  <li>- Utilizar o comando "yarn prisma migrate dev" no seu terminal, para obter novas migrações e construir um banco de dados sqlite na sua pasta prisma. O terminal irá pedir um nome para a sua nova migração.</li>
   <li>- Utilizar o comando "yarn start" para rodar o servidor.</li>
 </ul>
 
