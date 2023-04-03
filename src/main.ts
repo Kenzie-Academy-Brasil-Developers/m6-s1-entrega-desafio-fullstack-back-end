@@ -6,8 +6,9 @@ import { AppModule } from "./app.module";
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
+	const cors = require("cors");
 	app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
-
+	app.use(cors());
 	const config = new DocumentBuilder()
 		.setTitle("Clients and Contacts API")
 		.setDescription(
