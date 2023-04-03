@@ -9,6 +9,6 @@
   <li>- Utilizar o comando "yarn start:dev" para rodar o servidor.</li>
 </ul>
 
-<p>Para saber melhor sobre as rotas, e como elas funcionam, você pode acessar a documentação do swagger no endpoint: "http://localhost:3000/api". Observação: Você precisa rodar o servidor para ter acesso a este endpoint.</p>
+<p>Para saber melhor sobre as rotas, e como elas funcionam, você pode acessar a documentação do swagger no endpoint: "http://localhost:3001/api". Observação: Você precisa rodar o servidor para ter acesso a este endpoint.</p>
 
 <p>Qualquer dúvida, só entrar em contato: "lucoder618@gmail.com"</p>
