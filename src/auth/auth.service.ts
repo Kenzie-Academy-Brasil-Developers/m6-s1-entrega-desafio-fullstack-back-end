@@ -26,7 +26,7 @@ export class AuthService {
 
 		throw new Error("Email address or password provided is incorrect");
 	}
-	login(user: LoginUserDto): UserToken {
+	login(user: LoginUserDto) {
 		const payload: UserPayload = {
 			email: user.email,
 			id: user.id,
@@ -36,6 +36,7 @@ export class AuthService {
 
 		return {
 			access_token: jwtToken,
+			user_id: user.id,
 		};
 	}
 }
